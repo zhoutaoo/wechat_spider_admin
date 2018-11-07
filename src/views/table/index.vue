@@ -1,19 +1,43 @@
 <template>
   <div class="app-container">
+
+    <div class="filter-container">
+      <el-input
+        v-model="listQuery.accountName"
+        style="width: 200px;"
+        class="filter-item"
+        placeholder="公众号"
+        @keyup.enter.native="handleFilter"/>
+
+      <el-input
+        v-model="listQuery.author"
+        style="width: 200px;"
+        class="filter-item"
+        placeholder="作者"
+        @keyup.enter.native="handleFilter"/>
+
+      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        搜索
+      </el-button>
+      <br>
+      <br>
+      <br>
+    </div>
+
     <el-table v-loading="listLoading" :data="list" element-loading-text="Loading" border fit highlight-current-row>
       <el-table-column align="center" label="ID" width="80">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.$index+1 }}
         </template>
       </el-table-column>
       <el-table-column label="公众号" width="150">
         <template slot-scope="scope">
-          {{ scope.row.title }}
+          {{ scope.row.accountName }}
         </template>
       </el-table-column>
       <el-table-column label="标题">
         <template slot-scope="scope">
-          {{ scope.row.title }}
+          <a :href="scope.row.contentUrl" class="is-link" target="_blank" >{{ scope.row.title }}</a>
         </template>
       </el-table-column>
       <el-table-column label="作者" align="center" width="100">
@@ -23,35 +47,41 @@
       </el-table-column>
       <el-table-column label="阅读数" align="center" width="80">
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          {{ scope.row.readNum }}
         </template>
       </el-table-column>
       <el-table-column label="点赞数" align="center" width="80">
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          {{ scope.row.likeNum }}
         </template>
       </el-table-column>
       <el-table-column label="留言数" align="center" width="80">
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          {{ scope.row.electedCommentNum }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="状态" align="center" width="80">
+      <el-table-column align="center" prop="created_at" label="发布时间" width="200">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
+          {{ scope.row.createTime }}
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="发布时间" width="100">
+      <el-table-column align="center" prop="created_at" label="同步时间" width="200">
         <template slot-scope="scope">
-          {{ scope.row.display_time }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="同步时间" width="100">
-        <template slot-scope="scope">
-          {{ scope.row.display_time }}
+          {{ scope.row.updatedAt }}
         </template>
       </el-table-column>
     </el-table>
+
+    <!--翻页工具条-->
+    <div class="pagination-container">
+      <el-pagination
+        :current-page="listQuery.page"
+        :total="total"
+        :page-sizes="[20]"
+        :page-size="listQuery.limit"
+        layout="total, -> ,prev, pager, next, jumper"
+        @current-change="handleCurrentChange"/>
+    </div>
   </div>
 </template>
 
@@ -72,6 +102,13 @@ export default {
   data() {
     return {
       list: null,
+      total: 0,
+      listQuery: {
+        accountName: '',
+        author: '',
+        page: 1,
+        limit: 10
+      },
       listLoading: true
     }
   },
@@ -82,9 +119,18 @@ export default {
     fetchData() {
       this.listLoading = true
       getList(this.listQuery).then(response => {
-        this.list = response.data.items
+        this.list = response.data.list
+        this.total = response.data.total
         this.listLoading = false
       })
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.fetchData()
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page = val
+      this.fetchData()
     }
   }
 }
