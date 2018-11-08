@@ -46,26 +46,26 @@ export const constantRouterMap = [
       {
         path: 'mp_article',
         name: 'mp_article',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/article/index'),
         meta: { title: '公众号文章列表', icon: 'table' }
       },
       {
         path: 'mp',
         name: 'mp',
-        component: () => import('@/views/tree/index'),
+        component: () => import('@/views/mp/index'),
         meta: { title: '公众号列表', icon: 'tree' }
       }
     ]
   },
   {
-    path: '/form',
+    path: '/config',
     component: Layout,
     children: [
       {
         path: 'index',
-        name: 'Form',
+        name: 'config',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        meta: { title: '设置', icon: 'form' }
       }
     ]
   },

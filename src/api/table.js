@@ -7,3 +7,11 @@ export function getList(params) {
     params
   })
 }
+
+export function getMpList(params) {
+  return request({
+    url: '/mps',
+    method: 'get',
+    params
+  })
+}

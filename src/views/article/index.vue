@@ -71,7 +71,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    <br>
     <!--翻页工具条-->
     <div class="pagination-container">
       <el-pagination
@@ -90,14 +90,6 @@ import { getList } from '@/api/table'
 
 export default {
   filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
   },
   data() {
     return {
@@ -119,8 +111,9 @@ export default {
     fetchData() {
       this.listLoading = true
       getList(this.listQuery).then(response => {
-        this.list = response.data.list
-        this.total = response.data.total
+        console.log(response)
+        this.list = response.data.rows
+        this.total = response.data.count
         this.listLoading = false
       })
     },
