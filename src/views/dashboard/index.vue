@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name:{{ name }}</div>
-    <div class="dashboard-text">roles:<span v-for="role in roles" :key="role">{{ role }}</span></div>
+    <div class="dashboard-text">公众号数量:{{ mp_count }}</div>
+    <div class="dashboard-text">公众号总文章数:{{ mp_article_count }}</div>
   </div>
 </template>
 
