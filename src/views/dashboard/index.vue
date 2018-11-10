@@ -1,15 +1,18 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">公众号数量:{{ mp_count }}</div>
-    <div class="dashboard-text">公众号总文章数:{{ mp_article_count }}</div>
+    <panel-group/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import PanelGroup from './components/PanelGroup'
 
 export default {
   name: 'Dashboard',
+  components: {
+    PanelGroup
+  },
   computed: {
     ...mapGetters([
       'name',

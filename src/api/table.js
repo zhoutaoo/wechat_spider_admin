@@ -15,3 +15,10 @@ export function getMpList(params) {
     params
   })
 }
+
+export function getMpCount() {
+  return request({
+    url: '/mps/counts',
+    method: 'get'
+  })
+}
