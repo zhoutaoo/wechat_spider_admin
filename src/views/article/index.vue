@@ -25,22 +25,25 @@
     </div>
 
     <el-table v-loading="listLoading" :data="list" element-loading-text="Loading" border fit highlight-current-row>
-      <el-table-column align="center" label="ID" width="80">
+      <el-table-column align="center" label="ID" width="50">
         <template slot-scope="scope">
           {{ scope.$index+1 }}
         </template>
       </el-table-column>
-      <el-table-column label="公众号" width="150">
+      <el-table-column label="公众号" width="120">
         <template slot-scope="scope">
           {{ scope.row.accountName }}
         </template>
       </el-table-column>
       <el-table-column label="标题">
         <template slot-scope="scope">
-          <a :href="scope.row.contentUrl" class="is-link" target="_blank" >{{ scope.row.title }}</a>
+          <el-tooltip placement="top">
+            <div slot="content">{{ scope.row.digest }}</div>
+            <a :href="scope.row.contentUrl" class="is-link" target="_blank" >{{ scope.row.title }}</a>
+          </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="作者" align="center" width="100">
+      <el-table-column label="作者" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.author }}</span>
         </template>
@@ -60,12 +63,12 @@
           {{ scope.row.electedCommentNum }}
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="发布时间" width="200">
+      <el-table-column align="center" prop="created_at" label="发布时间" width="160">
         <template slot-scope="scope">
           {{ scope.row.createTime }}
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="同步时间" width="200">
+      <el-table-column align="center" prop="created_at" label="同步时间" width="160">
         <template slot-scope="scope">
           {{ scope.row.updatedAt }}
         </template>
@@ -99,7 +102,7 @@ export default {
         accountName: '',
         author: '',
         page: 1,
-        limit: 10
+        limit: 15
       },
       listLoading: true
     }

@@ -7,7 +7,18 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">文章数量</div>
-          <span class="card-panel-num">{{ mp_articles_num }}</span>
+          <span class="card-panel-num">{{ mpArticleNum }}</span>
+        </div>
+      </div>
+    </el-col>
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-icon-wrapper">
+          <svg-icon icon-class="form" class-name="card-panel-icon" />
+        </div>
+        <div class="card-panel-description">
+          <div class="card-panel-text">未处理文章数量</div>
+          <span class="card-panel-num">{{ mpArticleNum - mpArticleProcessedNum }}</span>
         </div>
       </div>
     </el-col>
@@ -18,7 +29,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">公众号数量</div>
-          <span class="card-panel-num">{{ mp_num }}</span>
+          <span class="card-panel-num">{{ mpNum }}</span>
         </div>
       </div>
     </el-col>
@@ -30,8 +41,9 @@ import { getMpCount } from '@/api/table'
 export default {
   data() {
     return {
-      mp_articles_num: 0,
-      mp_num: 0,
+      mpArticleNum: 0,
+      mpArticleProcessedNum: 0,
+      mpNum: 0,
       listLoading: true
     }
   },
@@ -41,8 +53,9 @@ export default {
   methods: {
     fetchData() {
       getMpCount().then(response => {
-        this.mp_num = response.data.mp_num
-        this.mp_articles_num = response.data.mp_articles_num
+        this.mpNum = response.data[0].mpNum
+        this.mpArticleNum = response.data[0].mpArticleNum
+        this.mpArticleProcessedNum = response.data[0].mpArticleProcessedNum
         this.listLoading = false
       })
     }

@@ -28,9 +28,9 @@
           {{ scope.row.accountName }}
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="发布时间" width="200">
+      <el-table-column align="center" prop="created_at" label="添加时间" width="200">
         <template slot-scope="scope">
-          {{ scope.row.createTime }}
+          {{ scope.row.createdAt }}
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="同步时间" width="200">
