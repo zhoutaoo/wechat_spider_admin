@@ -16,8 +16,14 @@
         placeholder="作者"
         @keyup.enter.native="handleFilter"/>
 
-      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        搜索
+      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
+      <el-button
+        :loading="listLoading"
+        style="margin:0 0 20px 20px;"
+        type="primary"
+        icon="document"
+        @click="handleDownload" >
+        导出excel
       </el-button>
       <br>
       <br>
@@ -87,6 +93,7 @@
         :total="total"
         :page-sizes="[20]"
         :page-size="listQuery.limit"
+        background
         layout="total, -> ,prev, pager, next, jumper"
         @current-change="handleCurrentChange"/>
     </div>
@@ -95,6 +102,7 @@
 
 <script>
 import { getList } from '@/api/table'
+import { parseTime } from '@/utils'
 
 export default {
   filters: {
@@ -109,6 +117,9 @@ export default {
         page: 1,
         limit: 15
       },
+      filename: 'article',
+      autoWidth: true,
+      bookType: 'xlsx',
       listLoading: true
     }
   },
@@ -131,6 +142,32 @@ export default {
     handleCurrentChange(val) {
       this.listQuery.page = val
       this.fetchData()
+    },
+    handleDownload() {
+      this.listLoading = true
+      import('@/vendor/Export2Excel').then(excel => {
+        const tHeader = ['序号', '图文编号', '公众号', '标题', '作者', '阅读数', '点赞数', '显示留言数', '发布时间', '同步时间']
+        const filterVal = ['id', 'newsId', 'accountName', 'title', 'author', 'readNum', 'likeNum', 'electedCommentNum', 'createTime', 'updatedAt']
+        const list = this.list
+        const data = this.formatJson(filterVal, list)
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: this.filename,
+          bookType: this.bookType,
+          autoWidth: this.autoWidth
+        })
+        this.listLoading = false
+      })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => {
+        if (j === 'timestamp') {
+          return parseTime(v[j])
+        } else {
+          return v[j]
+        }
+      }))
     }
   }
 }

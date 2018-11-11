@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import PanelGroup from './components/PanelGroup'
 
 export default {
@@ -14,10 +13,6 @@ export default {
     PanelGroup
   },
   computed: {
-    ...mapGetters([
-      'name',
-      'roles'
-    ])
   }
 }
 </script>
