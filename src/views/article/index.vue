@@ -30,6 +30,11 @@
           {{ scope.$index+1 }}
         </template>
       </el-table-column>
+      <el-table-column label="图文编号" align="center" width="120">
+        <template slot-scope="scope">
+          <span>{{ scope.row.newsId }}-{{ scope.row.idx }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="公众号" width="120">
         <template slot-scope="scope">
           {{ scope.row.accountName }}
@@ -43,7 +48,7 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="作者" align="center">
+      <el-table-column label="作者" align="center" width="120">
         <template slot-scope="scope">
           <span>{{ scope.row.author }}</span>
         </template>
@@ -53,12 +58,12 @@
           {{ scope.row.readNum }}
         </template>
       </el-table-column>
-      <el-table-column label="点赞数" align="center" width="80">
+      <el-table-column label="点赞数" align="center" width="70">
         <template slot-scope="scope">
           {{ scope.row.likeNum }}
         </template>
       </el-table-column>
-      <el-table-column label="留言数" align="center" width="80">
+      <el-table-column label="留言数" align="center" width="70">
         <template slot-scope="scope">
           {{ scope.row.electedCommentNum }}
         </template>
