@@ -29,10 +29,10 @@ export const constantRouterMap = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    name: 'Dashboard',
-    hidden: true,
+    name: 'dashboard',
     children: [{
       path: 'dashboard',
+      meta: { title: '首页', icon: 'example' },
       component: () => import('@/views/dashboard/index')
     }]
   },
@@ -41,35 +41,42 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/wechat/mp_article',
     name: 'wechat',
-    meta: { title: '微信', icon: 'example' },
+    meta: { title: '微信', icon: 'wechat' },
     children: [
       {
         path: 'mp_article',
         name: 'mp_article',
         component: () => import('@/views/article/index'),
-        meta: { title: '公众号文章列表', icon: 'table' }
+        meta: { title: '公众号文章列表', icon: 'documentation' }
       },
       {
         path: 'mp',
         name: 'mp',
         component: () => import('@/views/mp/index'),
-        meta: { title: '公众号列表', icon: 'tree' }
+        meta: { title: '公众号列表', icon: 'wechat' }
       }
     ]
   },
   {
     path: '/config',
     component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'config',
-        component: () => import('@/views/form/index'),
-        meta: { title: '设置', icon: 'form' }
-      }
-    ]
+    children: [{
+      path: 'index',
+      name: 'config',
+      component: () => import('@/views/form/index'),
+      meta: { title: '设置', icon: 'form' }
+    }]
   },
-
+  {
+    path: '/docs',
+    component: Layout,
+    children: [{
+      path: 'docs',
+      name: 'docs',
+      component: () => import('@/views/docs/index'),
+      meta: { title: '文档', icon: 'nested' }
+    }]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 
