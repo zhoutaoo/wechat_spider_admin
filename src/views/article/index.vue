@@ -92,11 +92,12 @@
       <el-pagination
         :current-page="listQuery.page"
         :total="total"
-        :page-sizes="[20]"
+        :page-sizes="[20,50,100,200,300,500]"
         :page-size="listQuery.limit"
         background
-        layout="total, -> ,prev, pager, next, jumper"
-        @current-change="handleCurrentChange"/>
+        layout="total, -> ,prev, pager, next, jumper, sizes"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"/>
     </div>
   </div>
 </template>
@@ -116,7 +117,7 @@ export default {
         accountName: '',
         author: '',
         page: 1,
-        limit: 15
+        limit: 20
       },
       filename: 'article',
       autoWidth: true,
@@ -142,6 +143,11 @@ export default {
     },
     handleCurrentChange(val) {
       this.listQuery.page = val
+      this.fetchData()
+    },
+    // 切换每页显示的数量
+    handleSizeChange (size) {
+      this.listQuery.limit = size
       this.fetchData()
     },
     handleDownload() {
